@@ -11,6 +11,8 @@
 	<groupId>com.afb</groupId>
 	<artifactId>mansys</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
+	<packaging>war</packaging>
+	
 	<name>AFB Management System</name>
 	<description>Inbox and outbox for AFB</description>
 
