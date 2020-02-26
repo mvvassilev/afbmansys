@@ -20,4 +20,9 @@ public class FakeMemberDataAccessService implements MemberDao{
                 member.getWorkContractID(), member.isDeclaration(), member.getPenaltyID()));
         return "NOTE: Inserted a new Member (ID:" + id.toString() + ", NAME: " + member.getName() + ")";
     }
+
+    @Override
+    public List<Member> getAllMembers() {
+        return DB;
+    }
 }

@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class MemberService {
 
@@ -18,5 +20,9 @@ public class MemberService {
 
     public String insertMember(Member member){
         return memberDao.insertMember(member);
+    }
+
+    public List<Member> getAllMembers(){
+        return memberDao.getAllMembers();
     }
 }
