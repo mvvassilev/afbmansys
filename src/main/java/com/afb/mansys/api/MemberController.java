@@ -6,7 +6,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
 
+@RequestMapping("members")
 @RestController
 public class MemberController {
 
@@ -17,15 +20,29 @@ public class MemberController {
         this.memberService = memberService;
     }
 
-    @RequestMapping("members/new")
-    @PostMapping
+    @PostMapping(path = "new")
     public void insertMember(@RequestBody Member member){
         memberService.insertMember(member);
     }
 
-    @RequestMapping("members")
     @GetMapping
     public List<Member> getAllMembers(){
         return memberService.getAllMembers();
+    }
+
+    @GetMapping(path = "{id}")
+    public Member getMemberByID(@PathVariable("id") UUID id){
+        return memberService.getMemberByID(id)
+                .orElse(null);
+    }
+
+    @DeleteMapping(path = "{id}")
+    public void deleteMember(@PathVariable("id") UUID id){
+        memberService.deleteMember(id);
+    }
+
+    @PutMapping(path = "{id}")
+    public void updateMember(@PathVariable("id") UUID id, @RequestBody Member member){
+        memberService.updateMember(id, member);
     }
 }

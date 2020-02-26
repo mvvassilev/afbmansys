@@ -4,6 +4,7 @@ import com.afb.mansys.model.Member;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 public interface MemberDao {
@@ -22,4 +23,10 @@ public interface MemberDao {
     }
 
     List<Member> getAllMembers();
+
+    Optional<Member> getMemberByID(UUID id);
+
+    String deleteMember(UUID id);
+
+    String updateMemberByID(UUID id, Member member);
 }

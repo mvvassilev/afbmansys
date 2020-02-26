@@ -5,6 +5,7 @@ import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @Repository("fakeDao")
@@ -24,5 +25,41 @@ public class FakeMemberDataAccessService implements MemberDao{
     @Override
     public List<Member> getAllMembers() {
         return DB;
+    }
+
+    @Override
+    public Optional<Member> getMemberByID(UUID id){
+        return DB.stream()
+                .filter(member -> member.getId().equals(id))
+                .findFirst();
+    }
+
+    @Override
+    public String deleteMember(UUID id) {
+        Optional<Member> member = getMemberByID(id);
+        if(member.isEmpty()){
+            return "NOTE: Delete called on member with ID: " + id.toString()+ " BUT such member does NOT EXIST!";
+        }
+        DB.remove(member.get());
+        return "NOTE: Delete called on member with ID: " + id.toString();
+    }
+
+    @Override
+    public String updateMemberByID(UUID id, Member updateMember) {
+        return getMemberByID(id)
+                .map(member -> {
+                    int indexOfMemberToUpdate = DB.indexOf(member);
+                    if(indexOfMemberToUpdate >= 0){
+                        DB.set(indexOfMemberToUpdate, new Member(id, updateMember.getName(),
+                                updateMember.getPersonalID(), updateMember.getMajor(), updateMember.getSex(),
+                                updateMember.getPhoto(), updateMember.getPhoneNumber(), updateMember.getRegisterDate(),
+                                updateMember.getRegion(), updateMember.getMembershipID(), updateMember.getRegisterAddress(),
+                                updateMember.getMainAddress(), updateMember.getEmail(), updateMember.getWorkContractID(),
+                                updateMember.isDeclaration(), updateMember.getPenaltyID()));
+                        return "NOTE: Update called on member with ID: " + id.toString();
+                    }
+                    return "NOTE: Update called on member with ID: " + id.toString() +
+                            " BUT such member does NOT EXIST!";
+                }).orElse("NOTE: Update NOT CALLED!");
     }
 }
