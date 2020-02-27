@@ -2,13 +2,18 @@ package com.afb.mansys.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import javax.validation.constraints.NotBlank;
 import java.util.Date;
 import java.util.UUID;
 
 public class Member {
     private final UUID id;
+
+    @NotBlank
     private final String name;
+    @NotBlank
     private final String personalID;
+
     private final String sex;
     private final Date registerDate;
     private final String membershipID;

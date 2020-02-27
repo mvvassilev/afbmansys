@@ -5,6 +5,8 @@ import com.afb.mansys.service.MemberService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -21,7 +23,7 @@ public class MemberController {
     }
 
     @PostMapping(path = "new")
-    public void insertMember(@RequestBody Member member){
+    public void insertMember(@Valid @NotNull @RequestBody Member member){
         memberService.insertMember(member);
     }
 
@@ -42,7 +44,7 @@ public class MemberController {
     }
 
     @PutMapping(path = "{id}")
-    public void updateMember(@PathVariable("id") UUID id, @RequestBody Member member){
+    public void updateMember(@PathVariable("id") UUID id,@Valid @NotNull @RequestBody Member member){
         memberService.updateMember(id, member);
     }
 }

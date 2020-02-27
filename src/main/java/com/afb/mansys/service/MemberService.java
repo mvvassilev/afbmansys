@@ -16,7 +16,7 @@ public class MemberService {
     private final MemberDao memberDao;
 
     @Autowired
-    public MemberService(@Qualifier("fakeDao") MemberDao memberDao) {
+    public MemberService(@Qualifier("postgres") MemberDao memberDao) {
         this.memberDao = memberDao;
     }
 
