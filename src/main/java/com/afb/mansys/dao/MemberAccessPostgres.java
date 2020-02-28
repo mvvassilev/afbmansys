@@ -28,11 +28,6 @@ public class MemberAccessPostgres implements MemberDao {
         return null;
     }
 
-    /**
-     * Receive all members in the Members table
-     *
-     * @return List of Member entities
-     */
     @Override
     public List<Member> getAllMembers() {
         final String sql = "SELECT * FROM member";
