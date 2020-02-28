@@ -23,6 +23,7 @@ public class Member {
     private String region;
     private String registerAddress;
     private String mainAddress;
+    private String workAddress;
     private String email;
     private String workContractID;
     private boolean declaration;
@@ -34,6 +35,7 @@ public class Member {
                   @JsonProperty("phoneNumber") String phoneNumber, @JsonProperty("registerDate") Date registerDate,
                   @JsonProperty("region") String region, @JsonProperty("membershipID") String membershipID,
                   @JsonProperty("registerAddress") String registerAddress, @JsonProperty("mainAddress") String mainAddress,
+                  @JsonProperty("workAddress") String workAddress,
                   @JsonProperty("email") String email, @JsonProperty("workContractID") String workContractID,
                   @JsonProperty("declaration") boolean declaration, @JsonProperty("penaltyID") String penaltyID) {
         this.id = id;
@@ -48,6 +50,7 @@ public class Member {
         this.membershipID = membershipID;
         this.registerAddress = registerAddress;
         this.mainAddress = mainAddress;
+        this.workAddress = workAddress;
         this.email = email;
         this.workContractID = workContractID;
         this.declaration = declaration;
@@ -125,6 +128,10 @@ public class Member {
     public void setMainAddress(String mainAddress) {
         this.mainAddress = mainAddress;
     }
+
+    public String getWorkAddress() { return this.workAddress; }
+
+    public void setWorkAddress(String workAddress) { this.workAddress = workAddress; }
 
     public String getEmail() {
         return email;

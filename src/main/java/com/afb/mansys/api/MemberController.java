@@ -23,28 +23,28 @@ public class MemberController {
     }
 
     @PostMapping(path = "new")
-    public void insertMember(@Valid @NotNull @RequestBody Member member){
+    public void insertMember(@Valid @NotNull @RequestBody Member member) {
         memberService.insertMember(member);
     }
 
     @GetMapping
-    public List<Member> getAllMembers(){
+    public List<Member> getAllMembers() {
         return memberService.getAllMembers();
     }
 
     @GetMapping(path = "{id}")
-    public Member getMemberByID(@PathVariable("id") UUID id){
+    public Member getMemberByID(@PathVariable("id") UUID id) {
         return memberService.getMemberByID(id)
                 .orElse(null);
     }
 
     @DeleteMapping(path = "{id}")
-    public void deleteMember(@PathVariable("id") UUID id){
+    public void deleteMember(@PathVariable("id") UUID id) {
         memberService.deleteMember(id);
     }
 
     @PutMapping(path = "{id}")
-    public void updateMember(@PathVariable("id") UUID id,@Valid @NotNull @RequestBody Member member){
+    public void updateMember(@PathVariable("id") UUID id, @Valid @NotNull @RequestBody Member member) {
         memberService.updateMember(id, member);
     }
 }
