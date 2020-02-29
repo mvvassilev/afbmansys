@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
+@CrossOrigin("http://localhost:4200")
 @RequestMapping("members")
 @RestController
 public class MemberController {
