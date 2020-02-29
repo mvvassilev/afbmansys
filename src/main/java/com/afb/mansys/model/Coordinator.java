@@ -2,15 +2,13 @@ package com.afb.mansys.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import java.util.UUID;
-
 public class Coordinator {
-    private final UUID id;
+    private final int id;
     private String username;
     private String password;
     private String region;
 
-    public Coordinator(@JsonProperty UUID id, @JsonProperty String username,
+    public Coordinator(@JsonProperty int id, @JsonProperty String username,
                        @JsonProperty String password, String region) {
         this.id = id;
         this.username = username;
@@ -18,7 +16,7 @@ public class Coordinator {
         this.region = region;
     }
 
-    public UUID getId() {
+    public int getId() {
         return id;
     }
 

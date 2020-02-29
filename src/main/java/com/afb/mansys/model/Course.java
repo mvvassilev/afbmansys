@@ -3,16 +3,15 @@ package com.afb.mansys.model;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.Date;
-import java.util.UUID;
 
 public class Course {
-    private final UUID id;
+    private final int id;
     private String courseName;
     private String language;
     private Date date;
     private String validityPeriod;
 
-    public Course(@JsonProperty UUID id, @JsonProperty String courseName, @JsonProperty String language,
+    public Course(@JsonProperty int id, @JsonProperty String courseName, @JsonProperty String language,
                   @JsonProperty Date date, @JsonProperty String validityPeriod) {
         this.id = id;
         this.courseName = courseName;
@@ -21,7 +20,7 @@ public class Course {
         this.validityPeriod = validityPeriod;
     }
 
-    public UUID getId() {
+    public int getId() {
         return id;
     }
 

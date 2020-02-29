@@ -8,7 +8,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
 
 @Service
 public class MemberService {
@@ -28,15 +27,15 @@ public class MemberService {
         return memberDao.getAllMembers();
     }
 
-    public Optional<Member> getMemberByID(UUID id){
+    public Optional<Member> getMemberByID(int id){
         return memberDao.getMemberByID(id);
     }
 
-    public String deleteMember(UUID id){
+    public String deleteMember(int id){
         return memberDao.deleteMember(id);
     }
 
-    public String updateMember(UUID id, Member newMember){
+    public String updateMember(int id, Member newMember){
         return memberDao.updateMemberByID(id, newMember);
     }
 }

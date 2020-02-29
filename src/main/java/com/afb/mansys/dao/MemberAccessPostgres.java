@@ -11,7 +11,6 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
 
 @Repository("postgres")
 public class MemberAccessPostgres implements MemberDao {
@@ -25,10 +24,10 @@ public class MemberAccessPostgres implements MemberDao {
 
 
     @Override
-    public String insertMember(UUID id, Member member) {
-        final String sql = "INSERT INTO member(id, name, personalID, major, sex, photo, phoneNumber, registerDate, region, " +
+    public String insertMember(Member member) {
+        final String sql = "INSERT INTO member(name, personalID, major, sex, photo, phoneNumber, registerDate, region, " +
                 "membershipID, registerAddress, mainAddress, workAddress, email, workContractID, declaration, penaltyID) " +
-                "values (uuid_generate_v4(), ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?); ";
+                "values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?); ";
 
         jdbcTemplate.update(sql, member.getName(), member.getPersonalID(), member.getMajor(), member.getSex(),
                 member.getPhoto(), member.getPhoneNumber(), member.getRegisterDate(), member.getRegion(),
@@ -43,7 +42,7 @@ public class MemberAccessPostgres implements MemberDao {
         final String sql = "SELECT * FROM member";
 
         return jdbcTemplate.query(sql, (resultSet, i) -> {
-            UUID id = UUID.fromString(resultSet.getString("id"));
+            int id = Integer.parseInt(resultSet.getString("id"));
             String name = resultSet.getString("name");
             String personalID = resultSet.getString("personalID");
             String major = resultSet.getString("major");
@@ -75,10 +74,10 @@ public class MemberAccessPostgres implements MemberDao {
     }
 
     @Override
-    public Optional<Member> getMemberByID(UUID id) {
+    public Optional<Member> getMemberByID(int id) {
         final String sql = "SELECT * FROM member WHERE id = ?";
         Member member = jdbcTemplate.queryForObject(sql, new Object[]{id}, (resultSet, i) -> {
-            UUID memberID = UUID.fromString(resultSet.getString("id"));
+            int memberID = Integer.parseInt(resultSet.getString("id"));
             String name = resultSet.getString("name");
             String personalID = resultSet.getString("personalID");
             String major = resultSet.getString("major");
@@ -111,12 +110,12 @@ public class MemberAccessPostgres implements MemberDao {
     }
 
     @Override
-    public String deleteMember(UUID id) {
+    public String deleteMember(int id) {
         return null;
     }
 
     @Override
-    public String updateMemberByID(UUID id, Member member) {
+    public String updateMemberByID(int id, Member member) {
         return null;
     }
 }

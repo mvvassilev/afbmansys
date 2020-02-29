@@ -9,7 +9,6 @@ import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
 
 @CrossOrigin("http://localhost:4200")
 @RequestMapping("members")
@@ -34,18 +33,18 @@ public class MemberController {
     }
 
     @GetMapping(path = "{id}")
-    public Member getMemberByID(@PathVariable("id") UUID id) {
+    public Member getMemberByID(@PathVariable("id") int id) {
         return memberService.getMemberByID(id)
                 .orElse(null);
     }
 
     @DeleteMapping(path = "{id}")
-    public void deleteMember(@PathVariable("id") UUID id) {
+    public void deleteMember(@PathVariable("id") int id) {
         memberService.deleteMember(id);
     }
 
     @PutMapping(path = "{id}")
-    public void updateMember(@PathVariable("id") UUID id, @Valid @NotNull @RequestBody Member member) {
+    public void updateMember(@PathVariable("id") int id, @Valid @NotNull @RequestBody Member member) {
         memberService.updateMember(id, member);
     }
 }

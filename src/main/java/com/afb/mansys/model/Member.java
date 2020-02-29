@@ -4,10 +4,9 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import javax.validation.constraints.NotBlank;
 import java.util.Date;
-import java.util.UUID;
 
 public class Member {
-    private final UUID id;
+    private final int id;
 
     @NotBlank
     private final String name;
@@ -29,7 +28,7 @@ public class Member {
     private boolean declaration;
     private String penaltyID;
 
-    public Member(@JsonProperty("id") UUID id, @JsonProperty("name") String name,
+    public Member(@JsonProperty("id") int id, @JsonProperty("name") String name,
                   @JsonProperty("personalID") String personalID, @JsonProperty("major") String major,
                   @JsonProperty("sex") String sex, @JsonProperty("photo") String photo,
                   @JsonProperty("phoneNumber") String phoneNumber, @JsonProperty("registerDate") Date registerDate,
@@ -57,7 +56,7 @@ public class Member {
         this.penaltyID = penaltyID;
     }
 
-    public UUID getId() {
+    public int getId() {
         return id;
     }
 

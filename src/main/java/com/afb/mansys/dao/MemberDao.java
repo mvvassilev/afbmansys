@@ -5,7 +5,6 @@ import com.afb.mansys.model.Member;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
 
 public interface MemberDao {
     /**
@@ -15,18 +14,13 @@ public interface MemberDao {
      * delete a member
      */
 
-    String insertMember(UUID id, Member member);
-
-    default String insertMember(Member member){
-        UUID id = UUID.randomUUID(); //TODO: auto increment
-        return insertMember(id, member);
-    }
+    String insertMember(Member member);
 
     List<Member> getAllMembers();
 
-    Optional<Member> getMemberByID(UUID id);
+    Optional<Member> getMemberByID(int id);
 
-    String deleteMember(UUID id);
+    String deleteMember(int id);
 
-    String updateMemberByID(UUID id, Member member);
+    String updateMemberByID(int id, Member member);
 }
