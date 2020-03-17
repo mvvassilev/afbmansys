@@ -1,5 +1,6 @@
 package com.afb.mansys.dao;
 
+import com.afb.mansys.model.Diploma;
 import com.afb.mansys.model.Member;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -13,7 +14,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository("postgres")
-public class MemberAccessPostgres implements MemberDao {
+public class MemberAccessPostgres implements MemberDao, DiplomaDao {
 
     private final JdbcTemplate jdbcTemplate;
 
@@ -39,7 +40,7 @@ public class MemberAccessPostgres implements MemberDao {
 
     @Override
     public List<Member> getAllMembers() {
-        final String sql = "SELECT * FROM member";
+        final String sql = "SELECT * FROM member ORDER BY id";
 
         return jdbcTemplate.query(sql, (resultSet, i) -> {
             int id = Integer.parseInt(resultSet.getString("id"));
@@ -116,6 +117,52 @@ public class MemberAccessPostgres implements MemberDao {
 
     @Override
     public String updateMemberByID(int id, Member member) {
-        return null;
+        final String sql = "UPDATE member SET name = ?, personalID = ?, sex = ?, registerDate = ?," +
+                "membershipID = ?, major = ?, photo = ?, phoneNumber = ?, region = ?, registerAddress = ?," +
+                "mainAddress = ?, workAddress = ?, email = ?, workContractID = ?, declaration = ?," +
+                "penaltyID = ? WHERE id = ?";
+
+        jdbcTemplate.update(sql, member.getName(), member.getPersonalID(), member.getSex(), member.getRegisterDate(),
+                member.getMembershipID(), member.getMajor(), member.getPhoto(), member.getPhoneNumber(),
+                member.getRegion(), member.getRegisterAddress(), member.getMainAddress(), member.getWorkAddress(),
+                member.getEmail(), member.getWorkContractID(), member.isDeclaration(), member.getPenaltyID(),
+                id);
+
+        return "Member updated successfully!";
+    }
+
+    // DIPLOMAS
+    @Override
+    public String insertDiploma(Diploma diploma) {
+
+        /**
+         * TODO: DESERIALIZE JSON WTIH DATE FIELD FORMAT
+         */
+        final String sql = "INSERT INTO diploma (id, degree, university, major, startDate, endDate)" +
+                " VALUES (?, ?, ?, ?, ?, ?)";
+
+        jdbcTemplate.update(sql, diploma.getId(), diploma.getDegree(), diploma.getUniversity(), diploma.getMajor(),
+                diploma.getStartDate(), diploma.getEndDate());
+
+        return "Diploma added successfully!";
+    }
+
+    @Override
+    public Optional<Diploma> getDiplomaByID(String id) {
+
+        final String sql = "SELECT * FROM diploma WHERE id = ?";
+
+        Diploma diploma = jdbcTemplate.queryForObject(sql, new Object[]{id}, (resultSet, i) -> {
+            String diplomaId = resultSet.getString("id");
+            String degree = resultSet.getString("degree");
+            String university = resultSet.getString("university");
+            String major = resultSet.getString("major");
+            String startDate = resultSet.getString("startDate");
+            String endDate = resultSet.getString("endDate");
+
+            return new Diploma(diplomaId, degree, university, major, startDate, endDate);
+        });
+
+        return Optional.ofNullable(diploma);
     }
 }
