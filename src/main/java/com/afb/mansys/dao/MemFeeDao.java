@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface MemFeeDao {
 
-    List<MemFee> getAllMemFees();
+    List<MemFee> getAllMemFees(); //TODO
 
-    List<MemFee> getAllMemFeesForMember(int memberID);
+    List<MemFee> getAllMemFeesForMember(int memberID); //TODO
 }

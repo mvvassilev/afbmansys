@@ -8,9 +8,9 @@ import java.util.Optional;
 
 public interface DiplomaDao {
 
-    String insertDiploma(Diploma diploma);
+    String insertDiploma(Diploma diploma); //TODO
 
-    List<Diploma> getAllDiplomas();
+    List<Diploma> getAllDiplomas(); //TODO
 
-    Optional<Diploma> getDiplomaForMember(int memberID);
+    Optional<Diploma> getDiplomaForMember(int memberID); //TODO
 }

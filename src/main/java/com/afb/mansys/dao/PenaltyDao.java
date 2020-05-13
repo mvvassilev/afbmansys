@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface PenaltyDao {
 
-    List<Penalty> getPenaltiesForMember(int memberID);
+    List<Penalty> getPenaltiesForMember(int memberID); //TODO
 
-    List<Penalty> getAllPenalties();
+    List<Penalty> getAllPenalties(); //TODO
 }
