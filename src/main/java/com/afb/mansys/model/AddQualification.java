@@ -2,7 +2,7 @@ package com.afb.mansys.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-public class Diploma {
+public class AddQualification {
     private String id;
     private String degree;
     private String university;
@@ -10,9 +10,9 @@ public class Diploma {
     private String duration;
     private int memberID;
 
-    public Diploma(@JsonProperty("id") String id, @JsonProperty("degree") String degree,
-                   @JsonProperty("university") String university, @JsonProperty("major") String major,
-                   @JsonProperty("duration") String duration, @JsonProperty("memberID") int memberID) {
+    public AddQualification(@JsonProperty("id") String id, @JsonProperty("degree") String degree,
+                            @JsonProperty("university") String university, @JsonProperty("major") String major,
+                            @JsonProperty("duration") String duration, @JsonProperty("memberID") int memberID) {
         this.id = id;
         this.degree = degree;
         this.university = university;

@@ -1,10 +1,14 @@
 package com.afb.mansys.model;
 
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 import javax.validation.constraints.NotBlank;
+import java.sql.Array;
 import java.util.Date;
 
+@JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
 public class Member {
     private final int id;
 
@@ -13,47 +17,42 @@ public class Member {
     @NotBlank
     private final String personalID;
 
-    private final String sex;
+    private final String gender;
     private final Date registerDate;
-    private final String membershipID;
     private String major;
     private String photo;
     private String phoneNumber;
     private String region;
     private String registerAddress;
-    private String mainAddress;
+    private String currentAddress;
     private String workAddress;
     private String email;
     private String workContractID;
-    private boolean declaration;
-    private String penaltyID;
+    private String declaration;
 
     public Member(@JsonProperty("id") int id, @JsonProperty("name") String name,
                   @JsonProperty("personalID") String personalID, @JsonProperty("major") String major,
-                  @JsonProperty("sex") String sex, @JsonProperty("photo") String photo,
+                  @JsonProperty("gender") String gender, @JsonProperty("photo") String photo,
                   @JsonProperty("phoneNumber") String phoneNumber, @JsonProperty("registerDate") Date registerDate,
-                  @JsonProperty("region") String region, @JsonProperty("membershipID") String membershipID,
-                  @JsonProperty("registerAddress") String registerAddress, @JsonProperty("mainAddress") String mainAddress,
-                  @JsonProperty("workAddress") String workAddress,
-                  @JsonProperty("email") String email, @JsonProperty("workContractID") String workContractID,
-                  @JsonProperty("declaration") boolean declaration, @JsonProperty("penaltyID") String penaltyID) {
+                  @JsonProperty("region") String region, @JsonProperty("registerAddress") String registerAddress,
+                  @JsonProperty("currentAddress") String currentAddress, @JsonProperty("declaration") String declaration,
+                  @JsonProperty("workAddress") String workAddress, @JsonProperty("email") String email,
+                  @JsonProperty("workContractID") String workContractID) {
         this.id = id;
         this.name = name;
         this.personalID = personalID;
         this.major = major;
-        this.sex = sex;
+        this.gender = gender;
         this.photo = photo;
         this.phoneNumber = phoneNumber;
         this.registerDate = registerDate;
         this.region = region;
-        this.membershipID = membershipID;
         this.registerAddress = registerAddress;
-        this.mainAddress = mainAddress;
+        this.currentAddress = currentAddress;
         this.workAddress = workAddress;
         this.email = email;
         this.workContractID = workContractID;
         this.declaration = declaration;
-        this.penaltyID = penaltyID;
     }
 
     public int getId() {
@@ -76,8 +75,8 @@ public class Member {
         this.major = major;
     }
 
-    public String getSex() {
-        return sex;
+    public String getGender() {
+        return gender;
     }
 
     public String getPhoto() {
@@ -108,10 +107,6 @@ public class Member {
         this.region = region;
     }
 
-    public String getMembershipID() {
-        return membershipID;
-    }
-
     public String getRegisterAddress() {
         return registerAddress;
     }
@@ -120,17 +115,21 @@ public class Member {
         this.registerAddress = registerAddress;
     }
 
-    public String getMainAddress() {
-        return mainAddress;
+    public String getCurrentAddress() {
+        return currentAddress;
     }
 
-    public void setMainAddress(String mainAddress) {
-        this.mainAddress = mainAddress;
+    public void setCurrentAddress(String currentAddress) {
+        this.currentAddress = currentAddress;
     }
 
-    public String getWorkAddress() { return this.workAddress; }
+    public String getWorkAddress() {
+        return this.workAddress;
+    }
 
-    public void setWorkAddress(String workAddress) { this.workAddress = workAddress; }
+    public void setWorkAddress(String workAddress) {
+        this.workAddress = workAddress;
+    }
 
     public String getEmail() {
         return email;
@@ -148,19 +147,11 @@ public class Member {
         this.workContractID = workContractID;
     }
 
-    public boolean isDeclaration() {
+    public String isDeclaration() {
         return declaration;
     }
 
-    public void setDeclaration(boolean declaration) {
+    public void setDeclaration(String declaration) {
         this.declaration = declaration;
-    }
-
-    public String getPenaltyID() {
-        return penaltyID;
-    }
-
-    public void setPenaltyID(String penaltyID) {
-        this.penaltyID = penaltyID;
     }
 }

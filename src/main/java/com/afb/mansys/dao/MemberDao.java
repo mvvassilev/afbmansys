@@ -1,18 +1,12 @@
 package com.afb.mansys.dao;
 
 import com.afb.mansys.model.Member;
+import org.springframework.beans.propertyeditors.StringTrimmerEditor;
 
-import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
 public interface MemberDao {
-    /**
-     * TODO: Member methods:
-     * insert a member
-     * update a member
-     * delete a member
-     */
 
     String insertMember(Member member);
 
@@ -23,4 +17,6 @@ public interface MemberDao {
     String deleteMember(int id);
 
     String updateMemberByID(int id, Member member);
+
+    List<Member> getMembersInRegion(String region);
 }

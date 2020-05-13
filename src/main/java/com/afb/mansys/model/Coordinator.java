@@ -8,8 +8,8 @@ public class Coordinator {
     private String password;
     private String region;
 
-    public Coordinator(@JsonProperty int id, @JsonProperty String username,
-                       @JsonProperty String password, String region) {
+    public Coordinator(@JsonProperty("id") int id, @JsonProperty("username") String username,
+                       @JsonProperty("password") String password, @JsonProperty("region") String region) {
         this.id = id;
         this.username = username;
         this.password = password;

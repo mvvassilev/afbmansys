@@ -38,4 +38,6 @@ public class MemberService {
     public String updateMember(int id, Member newMember){
         return memberDao.updateMemberByID(id, newMember);
     }
+
+    public List<Member> getMembersInRegion(String region) { return memberDao.getMembersInRegion(region); }
 }

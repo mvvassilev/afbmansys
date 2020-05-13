@@ -2,42 +2,32 @@ package com.afb.mansys.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import java.util.Date;
+import java.sql.Date;
 
 public class Course {
     private final int id;
-    private String courseName;
-    private String language;
+    private String name;
     private Date date;
-    private String validityPeriod;
+    private String lector;
 
-    public Course(@JsonProperty int id, @JsonProperty String courseName, @JsonProperty String language,
-                  @JsonProperty Date date, @JsonProperty String validityPeriod) {
+    public Course(@JsonProperty("id") int id, @JsonProperty("name") String name, @JsonProperty("date") Date date,
+                  @JsonProperty("lector") String lector) {
         this.id = id;
-        this.courseName = courseName;
-        this.language = language;
+        this.name = name;
         this.date = date;
-        this.validityPeriod = validityPeriod;
+        this.lector = lector;
     }
 
     public int getId() {
         return id;
     }
 
-    public String getCourseName() {
-        return courseName;
+    public String getName() {
+        return name;
     }
 
-    public void setCourseName(String courseName) {
-        this.courseName = courseName;
-    }
-
-    public String getLanguage() {
-        return language;
-    }
-
-    public void setLanguage(String language) {
-        this.language = language;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public Date getDate() {
@@ -48,11 +38,11 @@ public class Course {
         this.date = date;
     }
 
-    public String getValidityPeriod() {
-        return validityPeriod;
+    public String getLector() {
+        return lector;
     }
 
-    public void setValidityPeriod(String validityPeriod) {
-        this.validityPeriod = validityPeriod;
+    public void setLector(String lector) {
+        this.lector = lector;
     }
 }
