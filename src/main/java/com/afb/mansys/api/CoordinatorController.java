@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import java.util.List;
+import java.util.Optional;
 
 @JsonSerialize
 @CrossOrigin("http://localhost:4200")
@@ -41,5 +42,10 @@ public class CoordinatorController {
 
     public Boolean isCoordinator(String username, String password) {
         return coordinatorService.isCoordinator(username, password);
+    }
+
+    @GetMapping(path = "{memberID}")
+    public Optional<Coordinator> getCoordinatorByID(@PathVariable("memberID") int memberID) {
+        return coordinatorService.getCoordinatorByID(memberID);
     }
 }

@@ -1,7 +1,6 @@
 package com.afb.mansys.dao;
 
 import com.afb.mansys.model.*;
-import org.postgresql.PGConnection;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
@@ -369,6 +368,19 @@ public class MemberAccessPostgres implements MemberDao, CourseDao, AddQualificat
     @Override
     public Boolean isCoordinator(String username, String password) {
         return null;
+    }
+
+    @Override
+    public Optional<Coordinator> getCoordinatorByID(int memberID) {
+        final String sql = "SELECT * FROM coordinator WHERE memberID = ?";
+        Coordinator coordinator = jdbcTemplate.queryForObject(sql, new Object[]{memberID}, (resultSet, i) -> {
+            String username = resultSet.getString("username");
+            String password = resultSet.getString("password");
+            String region = resultSet.getString("region");
+
+            return new Coordinator(username, memberID, password, region);
+        });
+        return Optional.ofNullable(coordinator);
     }
 
     //##################################################################################################################

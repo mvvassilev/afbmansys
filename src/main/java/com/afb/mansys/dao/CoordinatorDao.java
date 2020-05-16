@@ -13,4 +13,6 @@ public interface CoordinatorDao {
     List<Coordinator> getAllCoordinators();
 
     Boolean isCoordinator(String username, String password); //TODO
+
+    Optional<Coordinator> getCoordinatorByID(int memberID); //TODO
 }

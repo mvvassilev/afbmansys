@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class CoordinatorService {
@@ -32,5 +33,9 @@ public class CoordinatorService {
 
     public Boolean isCoordinator(String username, String password){
         return coordinatorDao.isCoordinator(username, password);
+    }
+
+    public Optional<Coordinator> getCoordinatorByID(int memberID){
+        return coordinatorDao.getCoordinatorByID(memberID);
     }
 }
