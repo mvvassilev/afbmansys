@@ -38,4 +38,8 @@ public class CourseService {
     public Optional<Course> getCourseByID(int id) {
         return courseDao.getCourseByID(id);
     }
+
+    public String deleteCourseByID(int id){
+        return courseDao.deleteCourseByID(id);
+    }
 }

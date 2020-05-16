@@ -27,12 +27,6 @@ public class MemberAccessPostgres implements MemberDao, CourseDao, AddQualificat
     //########################################     M E M B E R    ######################################################
     //##################################################################################################################
 
-    /**
-     * Inserts a new member to the database
-     *
-     * @param member
-     * @return a message "Member added successfully"
-     */
     @Override
     public String insertMember(Member member) {
         final String sql = "INSERT INTO member(name, personalid, major, gender, photo, phonenumber, " +
@@ -48,11 +42,6 @@ public class MemberAccessPostgres implements MemberDao, CourseDao, AddQualificat
         return "Member added successfully";
     }
 
-    /**
-     * Get all members from the database
-     *
-     * @return the list of members
-     */
     @Override
     public List<Member> getAllMembers() {
         final String sql = "SELECT * FROM member ORDER BY id";
@@ -86,12 +75,6 @@ public class MemberAccessPostgres implements MemberDao, CourseDao, AddQualificat
         });
     }
 
-    /**
-     * Gets all members from a region
-     *
-     * @param region
-     * @return The list of members from that region
-     */
     @Override
     public List<Member> getMembersInRegion(String region) {
         final String sql = "SELECT * FROM member WHERE region = ? ORDER BY id";
@@ -124,12 +107,6 @@ public class MemberAccessPostgres implements MemberDao, CourseDao, AddQualificat
         });
     }
 
-    /**
-     * Gets the member with the provided ID
-     *
-     * @param id
-     * @return A member with the provided ID or null
-     */
     @Override
     public Optional<Member> getMemberByID(int id) {
         final String sql = "SELECT * FROM member WHERE id = ?";
@@ -162,12 +139,6 @@ public class MemberAccessPostgres implements MemberDao, CourseDao, AddQualificat
         return Optional.ofNullable(member);
     }
 
-    /**
-     * Deletes a row from the member database with the provided ID
-     *
-     * @param id
-     * @return A message saying "Member updated successfully! Deleted rows 1"
-     */
     @Override
     public String deleteMember(int id) {
 
@@ -205,13 +176,6 @@ public class MemberAccessPostgres implements MemberDao, CourseDao, AddQualificat
         return "Member deleted successfully!";
     }
 
-    /**
-     * Updates a row in the member database to the new member object
-     *
-     * @param id
-     * @param member
-     * @return A message saying "Member updated successfully!"
-     */
     @Override
     public String updateMemberByID(int id, Member member) {
         final String sql = "UPDATE member SET name = ?, personalID = ?, major = ?, gender = ?, " +
@@ -303,6 +267,29 @@ public class MemberAccessPostgres implements MemberDao, CourseDao, AddQualificat
             return new Course(id, name, date, lector);
         });
         return Optional.ofNullable(course);
+    }
+
+    @Override
+    public String deleteCourseByID(int id) {
+        final String sql = "DELETE FROM course WHERE id = ?";
+
+        Course course = jdbcTemplate.queryForObject(sql, new Object[]{id}, (resultSet, i) -> {
+            String name = resultSet.getString("name");
+            Date date = null;
+            try {
+                date = new SimpleDateFormat("yyyy-mm-dd").parse(resultSet.getString("registerDate"));
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+
+            String lector = resultSet.getString("lector");
+
+            return new Course(id, name, date, lector);
+        });
+
+        jdbcTemplate.update(sql, id);
+
+        return "Course deleted successfully!";
     }
 
     //##################################################################################################################

@@ -15,4 +15,6 @@ public interface CourseDao {
     List<Course> getAllCourses();
 
     Optional<Course> getCourseByID(int id);
+
+    String deleteCourseByID(int id);
 }

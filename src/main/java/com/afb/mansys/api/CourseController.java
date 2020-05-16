@@ -48,4 +48,9 @@ public class CourseController {
     public Optional<Course> getCourseByID(@PathVariable("id") int id){
         return courseService.getCourseByID(id);
     }
+
+    @DeleteMapping(path = "{id}")
+    public String deleteCourseByID(@PathVariable("id") int id) {
+        return courseService.deleteCourseByID(id);
+    }
 }
