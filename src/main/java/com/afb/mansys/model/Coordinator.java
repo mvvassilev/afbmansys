@@ -3,21 +3,21 @@ package com.afb.mansys.model;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class Coordinator {
-    private final int id;
     private String username;
+    private final int memberID;
     private String password;
     private String region;
 
-    public Coordinator(@JsonProperty("id") int id, @JsonProperty("username") String username,
+    public Coordinator(@JsonProperty("username") String username, @JsonProperty("memberID") int memberID,
                        @JsonProperty("password") String password, @JsonProperty("region") String region) {
-        this.id = id;
         this.username = username;
+        this.memberID = memberID;
         this.password = password;
         this.region = region;
     }
 
-    public int getId() {
-        return id;
+    public int getMemberID() {
+        return memberID;
     }
 
     public String getUsername() {

@@ -2,7 +2,7 @@ package com.afb.mansys.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import java.sql.Date;
+import java.util.Date;
 
 public class Course {
     private final int id;

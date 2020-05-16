@@ -10,4 +10,6 @@ public interface MemberCourseDao {
     List<MemberCourse> getAllMembersInCourse(int courseID); //TODO
 
     List<MemberCourse> getAllCoursesForMember(int memberID); //TODO
+
+    String insertMemberCourse(MemberCourse memberCourse);
 }

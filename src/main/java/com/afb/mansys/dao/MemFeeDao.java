@@ -6,7 +6,11 @@ import java.util.List;
 
 public interface MemFeeDao {
 
-    List<MemFee> getAllMemFees(); //TODO
+    List<MemFee> getAllMemFees();
 
     List<MemFee> getAllMemFeesForMember(int memberID); //TODO
+
+    String insertMemFee(MemFee memFee);
+
+    String updateLastFeeForMember(MemFee memFee, int memberID); //TODO
 }

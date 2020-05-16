@@ -14,7 +14,7 @@ import java.util.Optional;
 
 @Repository("postgres")
 public class MemberAccessPostgres implements MemberDao, CourseDao, AddQualificationDao, CoordinatorDao, DiplomaDao,
-        PenaltyDao, MemFeeDao, MemberCourseDao{
+        PenaltyDao, MemFeeDao, MemberCourseDao {
 
     private final JdbcTemplate jdbcTemplate;
 
@@ -94,7 +94,7 @@ public class MemberAccessPostgres implements MemberDao, CourseDao, AddQualificat
      */
     @Override
     public List<Member> getMembersInRegion(String region) {
-        final String sql = "SELECT * FROM member WHERE region = '?' ORDER BY id";
+        final String sql = "SELECT * FROM member WHERE region = ? ORDER BY id";
 
         return jdbcTemplate.query(sql, (resultSet, i) -> {
             int id = Integer.parseInt(resultSet.getString("id"));
@@ -237,22 +237,76 @@ public class MemberAccessPostgres implements MemberDao, CourseDao, AddQualificat
 
     @Override
     public String insertCourse(Course course) {
-        return null;
+        final String sql = "INSERT INTO course (name, date, lector) values (?, ?, ?);";
+
+        jdbcTemplate.update(sql, course.getName(), course.getDate(), course.getLector());
+
+        return "Course added successfully";
     }
 
     @Override
     public String updateCourseByID(Course course, int id) {
-        return null;
+        final String sql = "UPDATE course SET name = ?, date = ?, lector = ? WHERE id = ?";
+
+        jdbcTemplate.update(sql, course.getName(), course.getDate(), course.getLector(), id);
+
+        return "Course updated successfully!";
     }
 
     @Override
     public List<Course> getAllCoursesByMemberID(int memberID) {
-        return null;
+        final String sql = "SELECT course.* FROM course, member WHERE memberid = ?;";
+
+        return jdbcTemplate.query(sql, (resultSet, i) -> {
+            int id = Integer.parseInt(resultSet.getString(("id")));
+            Date date = null;
+            try {
+                date = new SimpleDateFormat("yyyy-mm-dd").parse(resultSet.getString("date"));
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+            String name = resultSet.getString("name");
+            String lector = resultSet.getString("lector");
+
+            return new Course(id, name, date, lector);
+        });
     }
 
     @Override
     public List<Course> getAllCourses() {
-        return null;
+        final String sql = "SELECT * FROM course ORDER BY id;";
+
+        return jdbcTemplate.query(sql, (resultSet, i) -> {
+            int id = Integer.parseInt(resultSet.getString(("id")));
+            Date date = null;
+            try {
+                date = new SimpleDateFormat("yyyy-mm-dd").parse(resultSet.getString("date"));
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+            String name = resultSet.getString("name");
+            String lector = resultSet.getString("lector");
+
+            return new Course(id, name, date, lector);
+        });
+    }
+
+    public Optional<Course> getCourseByID(int id) {
+        final String sql = "SELECT * FROM course WHERE id = ?;";
+
+        Course course = jdbcTemplate.queryForObject(sql, new Object[]{id}, (resultSet, i) -> {
+            Date date = null;
+            try {
+                date = new SimpleDateFormat("yyyy-mm-dd").parse(resultSet.getString("date"));
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+            String name = resultSet.getString("name");
+            String lector = resultSet.getString("lector");
+
+            return new Course(id, name, date, lector);
+        });
+        return Optional.ofNullable(course);
     }
 
     //##################################################################################################################
@@ -260,13 +314,30 @@ public class MemberAccessPostgres implements MemberDao, CourseDao, AddQualificat
     //##################################################################################################################
 
     @Override
-    public String insertAddQualification(AddQualification diploma) {
-        return null;
+    public String insertAddQualification(AddQualification addQualification) {
+        final String sql = "INSERT INTO addqualification (degree, university, major, duration, memberid)" +
+                "values (?, ?, ?, ?, ?);";
+
+        jdbcTemplate.update(sql, addQualification.getDegree(), addQualification.getUniversity(),
+                addQualification.getMajor(), addQualification.getDuration(), addQualification.getMemberID());
+
+        return "Additional Qualification added successfully";
     }
 
     @Override
     public List<AddQualification> getAllAddQualifications() {
-        return null;
+        final String sql = "SELECT * FROM addqualification ORDER BY id;";
+
+        return jdbcTemplate.query(sql, (resultSet, i) -> {
+            int id = Integer.parseInt(resultSet.getString("id"));
+            String degree = resultSet.getString("degree");
+            String university = resultSet.getString("university");
+            String major = resultSet.getString("major");
+            String duration = resultSet.getString("duration");
+            int memberID = Integer.parseInt(resultSet.getString("memberID"));
+
+            return new AddQualification(id, degree, university, major, duration, memberID);
+        });
     }
 
     @Override
@@ -280,17 +351,36 @@ public class MemberAccessPostgres implements MemberDao, CourseDao, AddQualificat
 
     @Override
     public String insertCoordinator(Coordinator coordinator) {
-        return null;
+        final String sql = "INSERT INTO coordinator (username, memberid, password, region)" +
+                "values (?, ?, ?, ?);";
+
+        jdbcTemplate.update(sql, coordinator.getUsername(), coordinator.getMemberID(), coordinator.getPassword(),
+                coordinator.getRegion());
+
+        return "Coordinator added successfully";
     }
 
     @Override
     public String updateCoordinatorByUsername(Coordinator coordinator, String username) {
-        return null;
+        final String sql = "UPDATE coordinator SET password = ?, region = ? WHERE username = ?";
+
+        jdbcTemplate.update(sql, coordinator.getPassword(), coordinator.getRegion(), username);
+
+        return "Coordinator updated successfully!";
     }
 
     @Override
     public List<Coordinator> getAllCoordinators() {
-        return null;
+        final String sql = "SELECT * FROM coordinator ORDER BY memberID;";
+
+        return jdbcTemplate.query(sql, (resultSet, i) -> {
+            String username = resultSet.getString("username");
+            int memberID = Integer.parseInt(resultSet.getString("memberID"));
+            String password = resultSet.getString("password");
+            String region = resultSet.getString("region");
+
+            return new Coordinator(username, memberID, password, region);
+        });
     }
 
     @Override
@@ -304,12 +394,29 @@ public class MemberAccessPostgres implements MemberDao, CourseDao, AddQualificat
 
     @Override
     public String insertDiploma(Diploma diploma) {
-        return null;
+        final String sql = "INSERT INTO diploma (degree, university, major, duration, memberid)" +
+                "values (?, ?, ?, ?, ?);";
+
+        jdbcTemplate.update(sql, diploma.getDegree(), diploma.getUniversity(), diploma.getMajor(),
+                diploma.getDuration(), diploma.getMemberID());
+
+        return "Diploma added successfully";
     }
 
     @Override
     public List<Diploma> getAllDiplomas() {
-        return null;
+        final String sql = "SELECT * FROM diploma ORDER BY id;";
+
+        return jdbcTemplate.query(sql, (resultSet, i) -> {
+            int id = Integer.parseInt(resultSet.getString("id"));
+            String degree = resultSet.getString("degree");
+            String university = resultSet.getString("university");
+            String major = resultSet.getString("major");
+            String duration = resultSet.getString("duration");
+            int memberID = Integer.parseInt(resultSet.getString("memberID"));
+
+            return new Diploma(id, degree, university, major, duration, memberID);
+        });
     }
 
     @Override
@@ -328,7 +435,32 @@ public class MemberAccessPostgres implements MemberDao, CourseDao, AddQualificat
 
     @Override
     public List<Penalty> getAllPenalties() {
-        return null;
+        final String sql = "SELECT * FROM penalty ORDER BY id;";
+
+        return jdbcTemplate.query(sql, (resultSet, i) -> {
+            int id = Integer.parseInt(resultSet.getString("id"));
+            Date startDate = null;
+            try {
+                startDate = new SimpleDateFormat("yyyy-mm-dd").parse(resultSet.getString("startDate"));
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+            String name = resultSet.getString("name");
+            String isCancelled = resultSet.getString("isCancelled");
+            int memberID = Integer.parseInt(resultSet.getString("memberID"));
+
+            return new Penalty(id, startDate, name, isCancelled, memberID);
+        });
+    }
+
+    @Override
+    public String insertPenalty(Penalty penalty) {
+        final String sql = "INSERT INTO penalty (startDate, name, isCancelled, memberID) values (?, ?, ?, ?)";
+
+        jdbcTemplate.update(sql, penalty.getStartDate(), penalty.getName(), penalty.getIsCancelled(),
+                penalty.getMemberID());
+
+        return "Penalty inserted successfully!";
     }
 
     //##################################################################################################################
@@ -337,11 +469,42 @@ public class MemberAccessPostgres implements MemberDao, CourseDao, AddQualificat
 
     @Override
     public List<MemFee> getAllMemFees() {
-        return null;
+        final String sql = "SELECT * FROM memfee ORDER BY id;";
+
+        return jdbcTemplate.query(sql, (resultSet, i) -> {
+            int id = Integer.parseInt(resultSet.getString("id"));
+            String type = resultSet.getString("type");
+            String year = resultSet.getString("year");
+            int memberID = Integer.parseInt(resultSet.getString("memberID"));
+
+            return new MemFee(id, type, year, memberID);
+        });
     }
 
     @Override
     public List<MemFee> getAllMemFeesForMember(int memberID) {
+        final String sql = "SELECT * FROM memfee WHERE memberID = ?";
+
+        return jdbcTemplate.query(sql, (resultSet, i) -> {
+            int id = Integer.parseInt(resultSet.getString("id"));
+            String type = resultSet.getString("type");
+            String year = resultSet.getString("year");
+
+            return new MemFee(id, type, year, memberID);
+        });
+    }
+
+    @Override
+    public String insertMemFee(MemFee memFee) {
+        final String sql = "INSERT INTO memfee (type, year, memberID) values (?, ?, ?)";
+
+        jdbcTemplate.update(sql, memFee.getType(), memFee.getYear(), memFee.getMemberID());
+
+        return "MemFee inserted successfully!";
+    }
+
+    @Override
+    public String updateLastFeeForMember(MemFee memFee, int memberID) {
         return null;
     }
 
@@ -351,11 +514,32 @@ public class MemberAccessPostgres implements MemberDao, CourseDao, AddQualificat
 
     @Override
     public List<MemberCourse> getAllMembersInCourse(int courseID) {
-        return null;
+        final String sql = "SELECT * FROM membercourse WHERE courseID = ?";
+
+        return jdbcTemplate.query(sql, (resultSet, i) -> {
+            int memberID = Integer.parseInt(resultSet.getString("memberID"));
+
+            return new MemberCourse(memberID, courseID);
+        });
     }
 
     @Override
     public List<MemberCourse> getAllCoursesForMember(int memberID) {
-        return null;
+        final String sql = "SELECT * FROM membercourse WHERE memberID = ?";
+
+        return jdbcTemplate.query(sql, (resultSet, i) -> {
+            int courseID = Integer.parseInt(resultSet.getString("courseID"));
+
+            return new MemberCourse(memberID, courseID);
+        });
+    }
+
+    @Override
+    public String insertMemberCourse(MemberCourse memberCourse) {
+        final String sql = "INSERT INTO membercourse (memberID, courseID) values (?, ?)";
+
+        jdbcTemplate.update(sql, memberCourse.getMemberID(), memberCourse.getCourseID());
+
+        return "MemberCourse inserted successfully!";
     }
 }

@@ -6,9 +6,9 @@ import java.util.List;
 import java.util.Optional;
 
 public interface AddQualificationDao {
-    String insertAddQualification(AddQualification diploma); //TODO
+    String insertAddQualification(AddQualification addQualification);
 
-    List<AddQualification> getAllAddQualifications(); //TODO
+    List<AddQualification> getAllAddQualifications();
 
     Optional<AddQualification> getAddQualificationForMember(int memberID); //TODO
 }

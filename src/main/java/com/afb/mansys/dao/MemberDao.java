@@ -18,5 +18,5 @@ public interface MemberDao {
 
     String updateMemberByID(int id, Member member);
 
-    List<Member> getMembersInRegion(String region);
+    List<Member> getMembersInRegion(String region); //TODO
 }

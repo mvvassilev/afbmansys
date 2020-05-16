@@ -8,5 +8,7 @@ public interface PenaltyDao {
 
     List<Penalty> getPenaltiesForMember(int memberID); //TODO
 
-    List<Penalty> getAllPenalties(); //TODO
+    List<Penalty> getAllPenalties();
+
+    String insertPenalty(Penalty penalty);
 }

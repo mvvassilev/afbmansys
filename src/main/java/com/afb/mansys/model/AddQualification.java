@@ -3,14 +3,14 @@ package com.afb.mansys.model;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class AddQualification {
-    private String id;
+    private int id;
     private String degree;
     private String university;
     private String major;
     private String duration;
     private int memberID;
 
-    public AddQualification(@JsonProperty("id") String id, @JsonProperty("degree") String degree,
+    public AddQualification(@JsonProperty("id") int id, @JsonProperty("degree") String degree,
                             @JsonProperty("university") String university, @JsonProperty("major") String major,
                             @JsonProperty("duration") String duration, @JsonProperty("memberID") int memberID) {
         this.id = id;
@@ -21,11 +21,11 @@ public class AddQualification {
         this.memberID = memberID;
     }
 
-    public String getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(int id) {
         this.id = id;
     }
 
