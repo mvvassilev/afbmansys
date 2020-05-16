@@ -200,13 +200,9 @@ public class MemberAccessPostgres implements MemberDao, CourseDao, AddQualificat
                     registerAddress, currentAddress, declaration, workAddress, email, workContractID);
         });
 
-        int rows = jdbcTemplate.update(sql, member.getName(), member.getPersonalID(), member.getMajor(), member.getGender(),
-                member.getPhoto(), member.getPhoneNumber(), member.getRegisterDate(), member.getRegion(),
-                member.getRegisterAddress(), member.getCurrentAddress(), member.getWorkAddress(), member.getEmail(),
-                member.getWorkContractID(), member.isDeclaration(), id);
+        jdbcTemplate.update(sql, id);
 
-        System.out.println("Member updated successfully! Deleted rows " + Integer.toString(rows));
-        return "Member updated successfully! Deleted rows " + Integer.toString(rows);
+        return "Member deleted successfully!";
     }
 
     /**
