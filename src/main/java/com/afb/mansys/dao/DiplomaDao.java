@@ -12,5 +12,5 @@ public interface DiplomaDao {
 
     List<Diploma> getAllDiplomas();
 
-    Optional<Diploma> getDiplomaForMember(int memberID); //TODO
+    Optional<List<Diploma>> getDiplomaForMember(int memberID);
 }

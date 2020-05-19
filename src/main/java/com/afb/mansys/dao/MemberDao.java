@@ -1,7 +1,6 @@
 package com.afb.mansys.dao;
 
 import com.afb.mansys.model.Member;
-import org.springframework.beans.propertyeditors.StringTrimmerEditor;
 
 import java.util.List;
 import java.util.Optional;
@@ -18,5 +17,5 @@ public interface MemberDao {
 
     String updateMemberByID(int id, Member member);
 
-    List<Member> getMembersInRegion(String region); //TODO
+    Optional<List<Member>> getMembersInRegion(String region);
 }

@@ -3,10 +3,11 @@ package com.afb.mansys.dao;
 import com.afb.mansys.model.Penalty;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface PenaltyDao {
 
-    List<Penalty> getPenaltiesForMember(int memberID); //TODO
+    Optional<List<Penalty>> getPenaltiesForMember(int memberID);
 
     List<Penalty> getAllPenalties();
 

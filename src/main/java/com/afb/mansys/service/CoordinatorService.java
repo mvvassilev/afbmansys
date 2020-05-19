@@ -38,4 +38,8 @@ public class CoordinatorService {
     public Optional<Coordinator> getCoordinatorByID(int memberID){
         return coordinatorDao.getCoordinatorByID(memberID);
     }
+
+    public Optional<Coordinator> getCoordinatorByUsername(String username){
+        return coordinatorDao.getCoordinatorByUsername(username);
+    }
 }

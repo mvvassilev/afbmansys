@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class MemberCourseService {
@@ -18,11 +19,11 @@ public class MemberCourseService {
         this.memberCourseDao = memberCourseDao;
     }
 
-    public List<MemberCourse> getAllMembersInCourse(int courseID){
+    public Optional<List<MemberCourse>> getAllMembersInCourse(int courseID){
         return memberCourseDao.getAllMembersInCourse(courseID);
     }
 
-    public List<MemberCourse> getAllCoursesForMember(int memberID){
+    public Optional<List<MemberCourse>> getAllCoursesForMember(int memberID){
         return memberCourseDao.getAllCoursesForMember(memberID);
     }
 

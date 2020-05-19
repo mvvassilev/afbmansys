@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class MemFeeService {
@@ -22,7 +23,7 @@ public class MemFeeService {
         return memFeeDao.getAllMemFees();
     }
 
-    public List<MemFee> getAllMemFeesForMember(int memberID) {
+    public Optional<List<MemFee>> getAllMemFeesForMember(int memberID) {
         return memFeeDao.getAllMemFeesForMember(memberID);
     }
 

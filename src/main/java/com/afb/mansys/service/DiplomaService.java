@@ -26,7 +26,7 @@ public class DiplomaService {
         return diplomaDao.getAllDiplomas();
     }
 
-    public Optional<Diploma> getDiplomaForMember(int memberID){
+    public Optional<List<Diploma>> getDiplomaForMember(int memberID){
         return diplomaDao.getDiplomaForMember(memberID);
     }
 }

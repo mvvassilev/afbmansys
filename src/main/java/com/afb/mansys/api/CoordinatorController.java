@@ -48,4 +48,9 @@ public class CoordinatorController {
     public Optional<Coordinator> getCoordinatorByID(@PathVariable("memberID") int memberID) {
         return coordinatorService.getCoordinatorByID(memberID);
     }
+
+    @GetMapping(path = "username/{username}")
+    public Optional<Coordinator> getCoordinatorByUsername(@PathVariable("username") String username){
+        return coordinatorService.getCoordinatorByUsername(username);
+    }
 }

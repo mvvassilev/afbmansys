@@ -39,5 +39,5 @@ public class MemberService {
         return memberDao.updateMemberByID(id, newMember);
     }
 
-    public List<Member> getMembersInRegion(String region) { return memberDao.getMembersInRegion(region); }
+    public Optional<List<Member>> getMembersInRegion(String region) { return memberDao.getMembersInRegion(region); }
 }

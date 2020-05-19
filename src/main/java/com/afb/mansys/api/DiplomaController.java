@@ -33,7 +33,8 @@ public class DiplomaController {
         return diplomaService.getAllDiplomas();
     }
 
-    public Optional<Diploma> getDiplomaForMember(@PathVariable("memberID") int memberID){
+    @GetMapping(path = "memberID/{memberID}")
+    public Optional<List<Diploma>> getDiplomaForMember(@PathVariable("memberID") int memberID){
         return diplomaService.getDiplomaForMember(memberID);
     }
 }

@@ -34,8 +34,8 @@ public class AddQualificationController {
         return addQualificationService.getAllAddQualifications();
     }
 
-    @GetMapping(path = "memberID/{id}")
-    public Optional<AddQualification> getAddQualificationForMember(@PathVariable("memberID") int memberID){
+    @GetMapping(path = "memberID/{memberID}")
+    public Optional<List<AddQualification>> getAddQualificationForMember(@PathVariable("memberID") int memberID){
         return addQualificationService.getAddQualificationForMember(memberID);
     }
 }

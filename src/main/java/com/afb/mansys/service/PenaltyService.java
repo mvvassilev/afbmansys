@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class PenaltyService {
@@ -18,7 +19,7 @@ public class PenaltyService {
         this.penaltyDao = penaltyDao;
     }
 
-    public List<Penalty> getPenaltiesForMember(int memberID){
+    public Optional<List<Penalty>> getPenaltiesForMember(int memberID){
         return penaltyDao.getPenaltiesForMember(memberID);
     }
 

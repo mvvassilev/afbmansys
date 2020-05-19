@@ -10,5 +10,5 @@ public interface AddQualificationDao {
 
     List<AddQualification> getAllAddQualifications();
 
-    Optional<AddQualification> getAddQualificationForMember(int memberID); //TODO
+    Optional<List<AddQualification>> getAddQualificationForMember(int memberID);
 }

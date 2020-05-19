@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import java.util.List;
+import java.util.Optional;
 
 @JsonSerialize
 @CrossOrigin("http://localhost:4200")
@@ -24,7 +25,7 @@ public class PenaltyController {
     }
 
     @GetMapping(path = "memberID/{memberID}")
-    public List<Penalty> getPenaltiesForMember(@PathVariable("memberID") int memberID) {
+    public Optional<List<Penalty>> getPenaltiesForMember(@PathVariable("memberID") int memberID) {
         return penaltyService.getPenaltiesForMember(memberID);
     }
 

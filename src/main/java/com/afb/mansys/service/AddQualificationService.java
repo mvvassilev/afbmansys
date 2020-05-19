@@ -27,7 +27,7 @@ public class AddQualificationService {
         return addQualificationDao.getAllAddQualifications();
     }
 
-    public Optional<AddQualification> getAddQualificationForMember(int memberID){
+    public Optional<List<AddQualification>> getAddQualificationForMember(int memberID){
         return addQualificationDao.getAddQualificationForMember(memberID);
     }
 }

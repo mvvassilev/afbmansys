@@ -7,9 +7,7 @@ import org.springframework.stereotype.Repository;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Repository("postgres")
 public class MemberAccessPostgres implements MemberDao, CourseDao, AddQualificationDao, CoordinatorDao, DiplomaDao,
@@ -75,10 +73,11 @@ public class MemberAccessPostgres implements MemberDao, CourseDao, AddQualificat
     }
 
     @Override
-    public List<Member> getMembersInRegion(String region) {
-        final String sql = "SELECT * FROM member WHERE region = ? ORDER BY id";
+    public Optional<List<Member>> getMembersInRegion(String region) {
 
-        return jdbcTemplate.query(sql, (resultSet, i) -> {
+        final String sql = "SELECT * FROM member WHERE region = '" + region + "'";
+
+        return Optional.of(jdbcTemplate.query(sql, (resultSet, i) -> {
             int id = Integer.parseInt(resultSet.getString("id"));
             String name = resultSet.getString("name");
             String personalID = resultSet.getString("personalID");
@@ -103,7 +102,7 @@ public class MemberAccessPostgres implements MemberDao, CourseDao, AddQualificat
 
             return new Member(id, name, personalID, major, gender, photo, phoneNumber, registerDate, region,
                     registerAddress, currentAddress, declaration, workAddress, email, workContractID);
-        });
+        }));
     }
 
     @Override
@@ -323,8 +322,19 @@ public class MemberAccessPostgres implements MemberDao, CourseDao, AddQualificat
     }
 
     @Override
-    public Optional<AddQualification> getAddQualificationForMember(int memberID) {
-        return Optional.empty();
+    public Optional<List<AddQualification>> getAddQualificationForMember(int memberID) {
+        final String sql = "SELECT * FROM addqualification WHERE memberID = " + memberID;
+
+        return Optional.of(jdbcTemplate.query(sql, (resultSet, i) -> {
+            int id = Integer.parseInt(resultSet.getString("id"));
+            String degree = resultSet.getString("degree");
+            String university = resultSet.getString("university");
+            String major = resultSet.getString("major");
+            String duration = resultSet.getString("duration");
+
+            return new AddQualification(id, degree, university, major, duration, memberID);
+        }));
+
     }
 
     //##################################################################################################################
@@ -383,6 +393,19 @@ public class MemberAccessPostgres implements MemberDao, CourseDao, AddQualificat
         return Optional.ofNullable(coordinator);
     }
 
+    @Override
+    public Optional<Coordinator> getCoordinatorByUsername(String username) {
+        final String sql = "SELECT * FROM coordinator WHERE username = ?";
+        Coordinator coordinator = jdbcTemplate.queryForObject(sql, new Object[]{username}, (resultSet, i) -> {
+            String password = resultSet.getString("password");
+            String region = resultSet.getString("region");
+            int memberID = Integer.parseInt(resultSet.getString("memberID"));
+
+            return new Coordinator(username, memberID, password, region);
+        });
+        return Optional.ofNullable(coordinator);
+    }
+
     //##################################################################################################################
     //#############################################    D I P L O M A    ################################################
     //##################################################################################################################
@@ -415,8 +438,18 @@ public class MemberAccessPostgres implements MemberDao, CourseDao, AddQualificat
     }
 
     @Override
-    public Optional<Diploma> getDiplomaForMember(int memberID) {
-        return Optional.empty();
+    public Optional<List<Diploma>> getDiplomaForMember(int memberID) {
+        final String sql = "SELECT * FROM diploma WHERE memberID = " + memberID;
+
+        return Optional.of(jdbcTemplate.query(sql, (resultSet, i) -> {
+            int id = Integer.parseInt(resultSet.getString("id"));
+            String degree = resultSet.getString("degree");
+            String university = resultSet.getString("university");
+            String major = resultSet.getString("major");
+            String duration = resultSet.getString("duration");
+
+            return new Diploma(id, degree, university, major, duration, memberID);
+        }));
     }
 
     //##################################################################################################################
@@ -424,8 +457,22 @@ public class MemberAccessPostgres implements MemberDao, CourseDao, AddQualificat
     //##################################################################################################################
 
     @Override
-    public List<Penalty> getPenaltiesForMember(int memberID) {
-        return null;
+    public Optional<List<Penalty>> getPenaltiesForMember(int memberID) {
+        final String sql = "SELECT * FROM penalty WHERE memberID = " + memberID;
+
+        return Optional.of(jdbcTemplate.query(sql, (resultSet, i) -> {
+            int id = Integer.parseInt(resultSet.getString("id"));
+            Date startDate = null;
+            try {
+                startDate = new SimpleDateFormat("yyyy-mm-dd").parse(resultSet.getString("startDate"));
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+            String name = resultSet.getString("name");
+            String isCancelled = resultSet.getString("isCancelled");
+
+            return new Penalty(id, startDate, name, isCancelled, memberID);
+        }));
     }
 
     @Override
@@ -477,16 +524,16 @@ public class MemberAccessPostgres implements MemberDao, CourseDao, AddQualificat
     }
 
     @Override
-    public List<MemFee> getAllMemFeesForMember(int memberID) {
-        final String sql = "SELECT * FROM memfee WHERE memberID = ?";
+    public Optional<List<MemFee>> getAllMemFeesForMember(int memberID) {
+        final String sql = "SELECT * FROM memfee WHERE memberID = " + memberID;
 
-        return jdbcTemplate.query(sql, (resultSet, i) -> {
+        return Optional.of(jdbcTemplate.query(sql, (resultSet, i) -> {
             int id = Integer.parseInt(resultSet.getString("id"));
             String type = resultSet.getString("type");
             String year = resultSet.getString("year");
 
             return new MemFee(id, type, year, memberID);
-        });
+        }));
     }
 
     @Override
@@ -508,25 +555,25 @@ public class MemberAccessPostgres implements MemberDao, CourseDao, AddQualificat
     //##################################################################################################################
 
     @Override
-    public List<MemberCourse> getAllMembersInCourse(int courseID) {
-        final String sql = "SELECT * FROM membercourse WHERE courseID = ?";
+    public Optional<List<MemberCourse>> getAllMembersInCourse(int courseID) {
+        final String sql = "SELECT * FROM membercourse WHERE courseID = " + courseID;
 
-        return jdbcTemplate.query(sql, (resultSet, i) -> {
+        return Optional.of(jdbcTemplate.query(sql, (resultSet, i) -> {
             int memberID = Integer.parseInt(resultSet.getString("memberID"));
 
             return new MemberCourse(memberID, courseID);
-        });
+        }));
     }
 
     @Override
-    public List<MemberCourse> getAllCoursesForMember(int memberID) {
-        final String sql = "SELECT * FROM membercourse WHERE memberID = ?";
+    public Optional<List<MemberCourse>> getAllCoursesForMember(int memberID) {
+        final String sql = "SELECT * FROM membercourse WHERE memberID = " + memberID;
 
-        return jdbcTemplate.query(sql, (resultSet, i) -> {
+        return Optional.of(jdbcTemplate.query(sql, (resultSet, i) -> {
             int courseID = Integer.parseInt(resultSet.getString("courseID"));
 
             return new MemberCourse(memberID, courseID);
-        });
+        }));
     }
 
     @Override

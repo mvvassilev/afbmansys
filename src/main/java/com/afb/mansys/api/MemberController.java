@@ -41,7 +41,7 @@ public class MemberController {
     }
 
     @GetMapping(path = "region/{regionInput}")
-    public List<Member> getMembersInRegion(@PathVariable("regionInput") String region) {
+    public Optional<List<Member>> getMembersInRegion(@PathVariable("regionInput") String region) {
         return memberService.getMembersInRegion(region);
     }
 

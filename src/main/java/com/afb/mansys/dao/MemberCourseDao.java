@@ -4,12 +4,13 @@ import com.afb.mansys.model.Member;
 import com.afb.mansys.model.MemberCourse;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface MemberCourseDao {
 
-    List<MemberCourse> getAllMembersInCourse(int courseID); //TODO
+    Optional<List<MemberCourse>> getAllMembersInCourse(int courseID);
 
-    List<MemberCourse> getAllCoursesForMember(int memberID); //TODO
+    Optional<List<MemberCourse>> getAllCoursesForMember(int memberID);
 
     String insertMemberCourse(MemberCourse memberCourse);
 }

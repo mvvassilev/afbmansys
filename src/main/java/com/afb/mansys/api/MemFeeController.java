@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import java.util.List;
+import java.util.Optional;
 
 @JsonSerialize
 @CrossOrigin("http://localhost:4200")
@@ -28,8 +29,8 @@ public class MemFeeController {
         return memFeeService.getAllMemFees();
     }
 
-    @GetMapping(path = "{memberID}")
-    public List<MemFee> getAllMemFeesForMember(@PathVariable("memberID") int memberID) {
+    @GetMapping(path = "memberID/{memberID}")
+    public Optional<List<MemFee>> getAllMemFeesForMember(@PathVariable("memberID") int memberID) {
         return memFeeService.getAllMemFeesForMember(memberID);
     }
 
