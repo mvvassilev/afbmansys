@@ -559,9 +559,10 @@ public class MemberAccessPostgres implements MemberDao, CourseDao, AddQualificat
         final String sql = "SELECT * FROM membercourse WHERE courseID = " + courseID;
 
         return Optional.of(jdbcTemplate.query(sql, (resultSet, i) -> {
+            int id = Integer.parseInt(resultSet.getString("id"));
             int memberID = Integer.parseInt(resultSet.getString("memberID"));
 
-            return new MemberCourse(memberID, courseID);
+            return new MemberCourse(id, memberID, courseID);
         }));
     }
 
@@ -570,9 +571,10 @@ public class MemberAccessPostgres implements MemberDao, CourseDao, AddQualificat
         final String sql = "SELECT * FROM membercourse WHERE memberID = " + memberID;
 
         return Optional.of(jdbcTemplate.query(sql, (resultSet, i) -> {
+            int id = Integer.parseInt(resultSet.getString("id"));
             int courseID = Integer.parseInt(resultSet.getString("courseID"));
 
-            return new MemberCourse(memberID, courseID);
+            return new MemberCourse(id, memberID, courseID);
         }));
     }
 
